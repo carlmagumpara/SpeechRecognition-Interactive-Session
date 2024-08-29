@@ -4,13 +4,12 @@ import viteLogo from '/vite.svg'
 import './App.css'
 
 var SpeechRecognition = SpeechRecognition || webkitSpeechRecognition;
+const recognition = new SpeechRecognition();
 
 function App() {
   const [text, setText] = useState('');
 
   useEffect(() => {
-    const recognition = new SpeechRecognition();
-
     recognition.lang = 'en-US';
     recognition.continues = true;
     recognition.onresult = (event) => {
