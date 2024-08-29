@@ -8,23 +8,20 @@ var SpeechRecognition = SpeechRecognition || webkitSpeechRecognition;
 function App() {
   const [text, setText] = useState('');
 
-  const recognition = new SpeechRecognition();
-
   useEffect(() => {
+    const recognition = new SpeechRecognition();
+
     recognition.lang = 'en-US';
     recognition.continues = true;
     recognition.onresult = (event) => {
-
       var msg = new SpeechSynthesisUtterance();
       msg.text = event.results[0][0].transcript;
       window.speechSynthesis.speak(msg);
-
-      setText(event.results[0][0].transcript);
+      setText(prevState => `${prevState} ${event.results[0][0].transcript}`);
     };
     recognition.onend = () => {
       try {
         recognition.start();
-        setText('');
       } catch (error) {
         console.log(error);
       }
